@@ -9,7 +9,6 @@ import com.example.demo.repository.InvoiceRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.VendorRepository;
 import com.example.demo.service.InvoiceService;
-import com.example.demo.util.InvoiceCategorizationEngine;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
