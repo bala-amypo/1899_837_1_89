@@ -23,13 +23,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     public InvoiceServiceImpl(InvoiceRepository invoiceRepository,
                               UserRepository userRepository,
-                              VendorRepository vendorRepository,
+                              VendorRepository vendorRepository
                              ) {
         this.invoiceRepository = invoiceRepository;
         this.userRepository = userRepository;
         this.vendorRepository = vendorRepository;
         this.ruleRepository = ruleRepository;
-        this.categorizationEngine = categorizationEngine;
     }
 
     @Override
