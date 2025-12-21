@@ -12,6 +12,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
+
     // Must be at least 32 characters
     private static final String JWT_SECRET =
             "my_jwt_secret_key_12345678901234567890";
