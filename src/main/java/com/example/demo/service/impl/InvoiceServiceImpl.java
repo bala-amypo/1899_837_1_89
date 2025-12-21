@@ -20,13 +20,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final UserRepository userRepository;
     private final VendorRepository vendorRepository;
     private final CategorizationRuleRepository ruleRepository;
-    private final InvoiceCategorizationEngine categorizationEngine;
 
     public InvoiceServiceImpl(InvoiceRepository invoiceRepository,
                               UserRepository userRepository,
                               VendorRepository vendorRepository,
-                              CategorizationRuleRepository ruleRepository,
-                              InvoiceCategorizationEngine categorizationEngine) {
+                             ) {
         this.invoiceRepository = invoiceRepository;
         this.userRepository = userRepository;
         this.vendorRepository = vendorRepository;
@@ -66,8 +64,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         var rules = ruleRepository
                 .findMatchingRulesByDescription(invoice.getDescription());
 
-        var category =
-                categorizationEngine.determineCategory(invoice, rules);
 
         invoice.setCategory(category);
         return invoiceRepository.save(invoice);
