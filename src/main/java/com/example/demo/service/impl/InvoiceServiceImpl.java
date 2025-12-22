@@ -25,18 +25,23 @@ public class InvoiceServiceImpl implements InvoiceService {
         this.ruleRepository = ruleRepository;
     }
 
+    // ✅ FIXED METHOD
+    @Override
+    public Invoice getInvoice(Long invoiceId) {
+        return invoiceRepository.findById(invoiceId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Invoice not found"));
+    }
+
     @Override
     public Invoice categorizeInvoice(Long invoiceId) {
 
-        Invoice invoice = invoiceRepository.findById(invoiceId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Invoice not found"));
+        Invoice invoice = getInvoice(invoiceId);
 
         String description = invoice.getDescription();
         List<CategorizationRule> rules =
                 ruleRepository.findMatchingRulesByDescription(description);
 
-        // sort rules by priority (high → low)
         rules.sort(Comparator.comparing(CategorizationRule::getPriority).reversed());
 
         Category matchedCategory = null;
@@ -51,17 +56,13 @@ public class InvoiceServiceImpl implements InvoiceService {
                     matchedCategory = rule.getCategory();
                     break;
                 }
-            }
-
-            else if ("CONTAINS".equals(matchType)) {
+            } else if ("CONTAINS".equals(matchType)) {
                 if (description.toLowerCase()
                         .contains(keyword.toLowerCase())) {
                     matchedCategory = rule.getCategory();
                     break;
                 }
-            }
-
-            else if ("REGEX".equals(matchType)) {
+            } else if ("REGEX".equals(matchType)) {
                 if (Pattern.compile(keyword, Pattern.CASE_INSENSITIVE)
                         .matcher(description).find()) {
                     matchedCategory = rule.getCategory();
