@@ -26,13 +26,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        // email-based lookup used internally; ID access allowed by spec
-        return userService.getAllUsers()
-                .stream()
-                .filter(u -> u.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    @GetMapping("/email/{email}")
+    public User getUserByEmail(@PathVariable String email) {
+        return userService.findByEmail(email);
     }
 }
