@@ -2,8 +2,6 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(
@@ -26,14 +24,6 @@ public class User {
     private String role;
 
     private LocalDateTime createdAt;
-
-    @ManyToMany
-    @JoinTable(
-        name = "user_vendor_favorites",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "vendor_id")
-    )
-    private Set<Vendor> favoriteVendors = new HashSet<>();
 
     @PrePersist
     public void prePersist() {
@@ -60,9 +50,4 @@ public class User {
     public void setRole(String role) { this.role = role; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
-
-    public Set<Vendor> getFavoriteVendors() { return favoriteVendors; }
-    public void setFavoriteVendors(Set<Vendor> favoriteVendors) {
-        this.favoriteVendors = favoriteVendors;
-    }
 }
