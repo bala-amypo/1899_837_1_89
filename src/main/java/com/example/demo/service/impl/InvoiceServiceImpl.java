@@ -1,92 +1,92 @@
-package com.example.demo.service.impl;
+// package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.*;
-import com.example.demo.repository.*;
-import com.example.demo.service.InvoiceService;
-import com.example.demo.util.InvoiceCategorizationEngine;
-import org.springframework.stereotype.Service;
+// import com.example.demo.exception.ResourceNotFoundException;
+// import com.example.demo.model.*;
+// import com.example.demo.repository.*;
+// import com.example.demo.service.InvoiceService;
+// import com.example.demo.util.InvoiceCategorizationEngine;
+// import org.springframework.stereotype.Service;
 
-import java.util.List;
+// import java.util.List;
 
-@Service
-public class InvoiceServiceImpl implements InvoiceService {
+// @Service
+// public class InvoiceServiceImpl implements InvoiceService {
 
-    private final InvoiceRepository invoiceRepository;
-    private final UserRepository userRepository;
-    private final VendorRepository vendorRepository;
-    private final CategorizationRuleRepository ruleRepository;
-    private final InvoiceCategorizationEngine categorizationEngine;
+//     private final InvoiceRepository invoiceRepository;
+//     private final UserRepository userRepository;
+//     private final VendorRepository vendorRepository;
+//     private final CategorizationRuleRepository ruleRepository;
+//     private final InvoiceCategorizationEngine categorizationEngine;
 
-    // Constructor order MUST match tests
-    public InvoiceServiceImpl(
-            InvoiceRepository invoiceRepository,
-            UserRepository userRepository,
-            VendorRepository vendorRepository,
-            CategorizationRuleRepository ruleRepository,
-            InvoiceCategorizationEngine categorizationEngine) {
+//     // Constructor order MUST match tests
+//     public InvoiceServiceImpl(
+//             InvoiceRepository invoiceRepository,
+//             UserRepository userRepository,
+//             VendorRepository vendorRepository,
+//             CategorizationRuleRepository ruleRepository,
+//             InvoiceCategorizationEngine categorizationEngine) {
 
-        this.invoiceRepository = invoiceRepository;
-        this.userRepository = userRepository;
-        this.vendorRepository = vendorRepository;
-        this.ruleRepository = ruleRepository;
-        this.categorizationEngine = categorizationEngine;
-    }
+//         this.invoiceRepository = invoiceRepository;
+//         this.userRepository = userRepository;
+//         this.vendorRepository = vendorRepository;
+//         this.ruleRepository = ruleRepository;
+//         this.categorizationEngine = categorizationEngine;
+//     }
 
-    @Override
-    public Invoice uploadInvoice(Long userId, Long vendorId, Invoice invoice) {
+//     @Override
+//     public Invoice uploadInvoice(Long userId, Long vendorId, Invoice invoice) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+//         User user = userRepository.findById(userId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("User not found"));
 
-        Vendor vendor = vendorRepository.findById(vendorId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Vendor not found"));
+//         Vendor vendor = vendorRepository.findById(vendorId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Vendor not found"));
 
-        if (invoice.getAmount() == null || invoice.getAmount() <= 0) {
-            throw new IllegalArgumentException("Amount must be greater than zero");
-        }
+//         if (invoice.getAmount() == null || invoice.getAmount() <= 0) {
+//             throw new IllegalArgumentException("Amount must be greater than zero");
+//         }
 
-        invoice.setUploadedBy(user);
-        invoice.setVendor(vendor);
-        invoice.setCategory(null);
+//         invoice.setUploadedBy(user);
+//         invoice.setVendor(vendor);
+//         invoice.setCategory(null);
 
-        return invoiceRepository.save(invoice);
-    }
+//         return invoiceRepository.save(invoice);
+//     }
 
-    @Override
-    public Invoice categorizeInvoice(Long invoiceId) {
+//     @Override
+//     public Invoice categorizeInvoice(Long invoiceId) {
 
-        Invoice invoice = invoiceRepository.findById(invoiceId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Invoice not found"));
+//         Invoice invoice = invoiceRepository.findById(invoiceId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Invoice not found"));
 
-        List<CategorizationRule> rules =
-                ruleRepository.findMatchingRulesByDescription(
-                        invoice.getDescription());
+//         List<CategorizationRule> rules =
+//                 ruleRepository.findMatchingRulesByDescription(
+//                         invoice.getDescription());
 
-        Category category =
-                categorizationEngine.determineCategory(invoice, rules);
+//         Category category =
+//                 categorizationEngine.determineCategory(invoice, rules);
 
-        invoice.setCategory(category);
-        return invoiceRepository.save(invoice);
-    }
+//         invoice.setCategory(category);
+//         return invoiceRepository.save(invoice);
+//     }
 
-    @Override
-    public List<Invoice> getInvoicesByUser(Long userId) {
+//     @Override
+//     public List<Invoice> getInvoicesByUser(Long userId) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+//         User user = userRepository.findById(userId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("User not found"));
 
-        return invoiceRepository.findByUploadedBy(user);
-    }
+//         return invoiceRepository.findByUploadedBy(user);
+//     }
 
-    @Override
-    public Invoice getInvoice(Long invoiceId) {
-        return invoiceRepository.findById(invoiceId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Invoice not found"));
-    }
-}
+//     @Override
+//     public Invoice getInvoice(Long invoiceId) {
+//         return invoiceRepository.findById(invoiceId)
+//                 .orElseThrow(() ->
+//                         new ResourceNotFoundException("Invoice not found"));
+//     }
+//}
