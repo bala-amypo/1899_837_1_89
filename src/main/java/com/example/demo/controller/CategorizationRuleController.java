@@ -32,3 +32,4 @@ public class CategorizationRuleController {
         ruleService.deleteRule(ruleId);
     }
 }
+
