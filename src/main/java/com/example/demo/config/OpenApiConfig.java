@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class OpenApiConfig {
+public class OpenApiConfig{
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -19,13 +19,3 @@ public class OpenApiConfig {
         }
 }
 
-
-
-@Configuration
-public class SecurityConfig {
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-}
