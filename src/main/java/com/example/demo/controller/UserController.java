@@ -17,7 +17,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    public User registerUser(@RequestBody User user) {
         return userService.registerUser(user);
     }
 
@@ -28,6 +28,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
+        // email-based lookup used internally; ID access allowed by spec
         return userService.getAllUsers()
                 .stream()
                 .filter(u -> u.getId().equals(id))
