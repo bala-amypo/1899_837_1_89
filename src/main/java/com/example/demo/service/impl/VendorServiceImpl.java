@@ -13,7 +13,6 @@ public class VendorServiceImpl implements VendorService {
 
     private final VendorRepository vendorRepository;
 
-    // ⚠️ Constructor injection only
     public VendorServiceImpl(VendorRepository vendorRepository) {
         this.vendorRepository = vendorRepository;
     }
