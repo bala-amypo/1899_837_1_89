@@ -29,21 +29,21 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-        name = "user_favorite_vendors",
+        name = "user_vendor_favorites",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "vendor_id")
     )
     private Set<Vendor> favoriteVendors = new HashSet<>();
 
     @PrePersist
-    protected void prePersist() {
+    public void prePersist() {
         this.createdAt = LocalDateTime.now();
         if (this.role == null) {
             this.role = "USER";
         }
     }
 
-    // Getters and Setters
+    // getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

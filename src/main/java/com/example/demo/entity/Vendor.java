@@ -26,11 +26,11 @@ public class Vendor {
     private Set<User> users = new HashSet<>();
 
     @PrePersist
-    protected void prePersist() {
+    public void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
+    // getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -46,5 +46,4 @@ public class Vendor {
     public LocalDateTime getCreatedAt() { return createdAt; }
 
     public Set<User> getUsers() { return users; }
-    public void setUsers(Set<User> users) { this.users = users; }
 }

@@ -16,35 +16,28 @@ public class Invoice {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
     private String invoiceNumber;
-
     private Double amount;
-
     private LocalDate invoiceDate;
-
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "uploaded_by_id")
     private User uploadedBy;
 
     private LocalDateTime uploadedAt;
 
     @PrePersist
-    protected void prePersist() {
+    public void prePersist() {
         this.uploadedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
+    // getters and setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
     public Vendor getVendor() { return vendor; }
     public void setVendor(Vendor vendor) { this.vendor = vendor; }

@@ -16,15 +16,14 @@ public class Category {
 
     private String categoryName;
     private String description;
-
     private LocalDateTime createdAt;
 
     @PrePersist
-    protected void prePersist() {
+    public void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
+    // getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
