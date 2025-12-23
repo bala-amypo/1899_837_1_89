@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +29,7 @@ public class Vendor {
     private Instant createdAt;
 
     @ManyToMany(mappedBy = "favoriteVendors")
+    @JsonIgnore
     @Builder.Default
     private Set<User> users = new HashSet<>();
 

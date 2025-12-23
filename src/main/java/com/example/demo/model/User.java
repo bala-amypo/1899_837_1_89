@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,6 +42,7 @@ public class User {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "vendor_id")
     )
+    @JsonIgnore
     @Builder.Default
     private Set<Vendor> favoriteVendors = new HashSet<>();
 
