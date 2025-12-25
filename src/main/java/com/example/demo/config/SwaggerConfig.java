@@ -1,31 +1,33 @@
-// package com.example.demo.config;
+package com.example.demo.config;
 
-// import io.swagger.v3.oas.models.OpenAPI;
-// import io.swagger.v3.oas.models.info.Info;
-// import io.swagger.v3.oas.models.security.SecurityRequirement;
-// import io.swagger.v3.oas.models.security.SecurityScheme;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-// @Configuration
-// public class SwaggerConfig {
+@Configuration
+public class SwaggerConfig {
 
-//     @Bean
-//     public OpenAPI openAPI() {
+    @Bean
+    public OpenAPI apiInfo() {
 
-//         return new OpenAPI()
-//                 .info(new Info()
-//                         .title("Smart Invoice Categorization API")
-//                         .description("REST API for smart invoice categorization")
-//                         .version("1.0.0"))
-//                 .addSecurityItem(
-//                         new SecurityRequirement().addList("bearerAuth"))
-//                 .components(new io.swagger.v3.oas.models.Components()
-//                         .addSecuritySchemes("bearerAuth",
-//                                 new SecurityScheme()
-//                                         .name("bearerAuth")
-//                                         .type(SecurityScheme.Type.HTTP)
-//                                         .scheme("bearer")
-//                                         .bearerFormat("JWT")));
-//     }
-// }
+        return new OpenAPI()
+                .info(new Info()
+                        .title("API for Smart Invoice Categorization")
+                        .description("REST API for intelligent invoice categorization using rule-based matching")
+                        .version("1.0.0")
+                )
+                .addSecurityItem(new SecurityRequirement().addList("bearer-key"))
+                .components(
+                        new io.swagger.v3.oas.models.Components()
+                                .addSecuritySchemes("bearer-key",
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
+                                )
+                );
+    }
+}
