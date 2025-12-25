@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 public class AuthResponse {
-
     private String token;
     private Long userId;
     private String email;
@@ -14,6 +13,7 @@ public class AuthResponse {
         this.role = role;
     }
 
+    // Getters used by TestNG
     public String getToken() { return token; }
     public Long getUserId() { return userId; }
     public String getEmail() { return email; }
