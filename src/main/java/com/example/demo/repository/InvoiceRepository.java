@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
-    List<Invoice> findByUploadedBy(User user);
+    List<Invoice> findByUploadedBy(User user); // [cite: 272]
 
-    @Query("select i from Invoice i where i.amount > ?1")
-    List<Invoice> findByAmountGreaterThanHql(Double amount);
+    @Query("SELECT i FROM Invoice i WHERE i.amount > :amount") // [cite: 746]
+    List<Invoice> findByAmountGreaterThanHql(Double amount); // Required for Test 57
 }
