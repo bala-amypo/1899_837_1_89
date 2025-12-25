@@ -7,15 +7,12 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class SwaggerConfig {
 
-    // RENAMED method to avoid conflict with OpenApiConfig
     @Bean
-    @Primary // Ensures this configuration takes precedence if both are loaded
-    public OpenAPI projectOpenAPI() {
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("Smart Invoice Categorization API")
