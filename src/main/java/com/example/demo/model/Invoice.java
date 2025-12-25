@@ -1,51 +1,35 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "invoices",
-       uniqueConstraints = @UniqueConstraint(name = "uk_vendor_invoice_number", columnNames = {"vendor_id", "invoiceNumber"}))
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Table(name = "invoices", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"vendor_id", "invoiceNumber"})
+})
 public class Invoice {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "vendor_id", nullable = false)
+    private String invoiceNumber;
+    private Double amount;
+    private String description;
+    private LocalDateTime uploadedAt;
+
+    @ManyToOne @JoinColumn(name = "vendor_id", nullable = false)
     private Vendor vendor;
 
-    @Column(nullable = false)
-    private String invoiceNumber;
-
-    @Column(nullable = false)
-    private Double amount;
-
-    @Column(nullable = false)
-    private Instant invoiceDate;
-
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "uploaded_by_id", nullable = false)
+    @ManyToOne @JoinColumn(name = "uploaded_by_id", nullable = false)
     private User uploadedBy;
 
-    @Column(nullable = false, updatable = false)
-    private Instant uploadedAt;
+    @ManyToOne @JoinColumn(name = "category_id")
+    private Category category;
 
     @PrePersist
-    protected void prePersist() {
-        this.uploadedAt = Instant.now();
+    public void prePersist() {
+        this.uploadedAt = LocalDateTime.now();
     }
+    // Getters and Setters...
 }
-    
