@@ -1,37 +1,28 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+[cite_start]@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")}) // [cite: 112, 131]
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotBlank @Column(unique = true)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; [cite_start]// [cite: 105, 106]
     private String email;
-
-    @NotBlank @Size(min = 8)
     private String password;
-
-    private String role; // "ADMIN" or "USER"
+    private String role; [cite_start]// [cite: 117]
     private LocalDateTime createdAt;
 
     @ManyToMany
-    @JoinTable(name = "user_vendor_favorites",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "vendor_id"))
+    [cite_start]@JoinTable(name = "user_vendor_favorites") // [cite: 127]
     private Set<Vendor> favoriteVendors = new HashSet<>();
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-        if (this.role == null) this.role = "USER";
+        this.createdAt = LocalDateTime.now(); [cite_start]// [cite: 122]
+        if (this.role == null) this.role = "USER"; [cite_start]// [cite: 135]
     }
-    // Getters and Setters...
+    // Getters and Setters
 }
