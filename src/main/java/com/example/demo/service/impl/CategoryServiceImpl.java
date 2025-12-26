@@ -1,45 +1,34 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.CategorizationRule;
-import com.example.demo.repository.CategorizationRuleRepository;
+import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
-import com.example.demo.service.CategorizationRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CategorizationRuleServiceImpl implements CategorizationRuleService {
+public class CategoryServiceImpl implements CategoryService {
 
-    private final CategorizationRuleRepository repository;
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository repository;
 
-    @Autowired
-    public CategorizationRuleServiceImpl(
-            CategorizationRuleRepository repository,
-            CategoryRepository categoryRepository
-    ) {
+    public CategoryServiceImpl(CategoryRepository repository) {
         this.repository = repository;
-        this.categoryRepository = categoryRepository;
     }
 
     @Override
-    public CategorizationRule createRule(CategorizationRule rule) {
-        return repository.save(rule);
+    public Category createCategory(Category category) {
+        return repository.save(category);
     }
 
     @Override
-    public List<CategorizationRule> getAllRules() {
+    public List<Category> getAllCategories() {
         return repository.findAll();
     }
 
     @Override
-    public void deleteRule(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new RuntimeException("Rule not found with id: " + id);
-        }
+    public Category getCategoryById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 }
