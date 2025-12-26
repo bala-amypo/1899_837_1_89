@@ -1,21 +1,17 @@
-package com.example.demo;
+package com.example.demo.dto;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import static org.assertj.core.api.Assertions.assertThat;
+public class AuthResponse {
+    private String token;
 
-@SpringBootTest
-class SmartInvoiceApplicationTests {
+    public AuthResponse(String token) {
+        this.token = token;
+    }
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    public String getToken() {
+        return token;
+    }
 
-    @Test
-    void contextLoads() {
-        // This test ensures that the Spring Boot application context loads successfully.
-        // If this passes, it means your SwaggerConfig, SecurityConfig, and Database connections are correct.
-        assertThat(applicationContext).isNotNull();
+    public void setToken(String token) {
+        this.token = token;
     }
 }
