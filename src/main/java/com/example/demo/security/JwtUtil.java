@@ -27,7 +27,9 @@ public class JwtUtil {
             claims.put("role", user.getRole());
             claims.put("email", user.getEmail());
         }
-        return createToken(claims, userDetails.getUsername());
+        // If userDetails is null, use email from user as subject
+        String subject = (userDetails != null) ? userDetails.getUsername() : user.getEmail();
+        return createToken(claims, subject);
     }
 
     private String createToken(Map<String, Object> claims, String subject) {

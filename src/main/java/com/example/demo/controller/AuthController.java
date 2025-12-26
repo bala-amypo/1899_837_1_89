@@ -4,7 +4,8 @@ import com.example.demo.dto.*;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.impl.UserServiceImpl;
-import com.example.demo.util.JwtUtil;
+// FIX: Correct Import is .security, not .util
+import com.example.demo.security.JwtUtil; 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -45,7 +46,12 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             
             User user = userRepo.findByEmail(req.getEmail()).orElseThrow();
-            // Assuming JwtUtil takes UserDetails and User or similar - match your JwtUtil mock
+            
+            // Generate token using the user details
+            // We pass null for UserDetails here as the User entity is sufficient for this simple implementation
+            // or you can load UserDetails if your JwtUtil requires it specifically.
+            // Based on your previous JwtUtil, it likely takes (UserDetails, User) or just User.
+            // Let's assume standard usage:
             String token = jwtUtil.generateToken(null, user); 
             
             return ResponseEntity.ok(new AuthResponse(token, user.getId(), user.getEmail(), user.getRole()));
