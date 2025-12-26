@@ -1,57 +1,21 @@
-package com.example.demo.dto;
+package com.example.demo;
 
-public class AuthResponse {
-    private String accessToken;
-    private String tokenType = "Bearer";
-    private Long id;
-    private String email;
-    private String role;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    public AuthResponse(String accessToken, Long id, String email, String role) {
-        this.accessToken = accessToken;
-        this.id = id;
-        this.email = email;
-        this.role = role;
-    }
+@SpringBootTest
+class SmartInvoiceApplicationTests {
 
-    // Getters and Setters
-    public String getAccessToken() {
-        return accessToken;
-    }
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public String getTokenType() {
-        return tokenType;
-    }
-
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    @Test
+    void contextLoads() {
+        // This test ensures that the Spring Boot application context loads successfully.
+        // If this passes, it means your SwaggerConfig, SecurityConfig, and Database connections are correct.
+        assertThat(applicationContext).isNotNull();
     }
 }
