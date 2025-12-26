@@ -17,18 +17,18 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                // 1. SRS Requirement: Title, Version, Description
+                // 1. SRS Requirements
                 .info(new Info()
                         .title("Smart Invoice Categorization API")
                         .version("1.0")
                         .description("API for managing and categorizing invoices."))
                 
-                // 2. Your Environment Requirement: The specific Server URL
+                // 2. YOUR Environment URL (Required for Amypo)
                 .servers(List.of(
                         new Server().url("https://9287.408procr.amypo.ai/")
                 ))
 
-                // 3. SRS Requirement: JWT Security Scheme
+                // 3. Security Requirements
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth",
