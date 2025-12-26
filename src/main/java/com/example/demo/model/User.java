@@ -1,9 +1,17 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email")
+        }
+)
 public class User {
 
     @Id
@@ -13,33 +21,41 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String role;
+    private String role = "USER";
 
-    public Long getId() {
-        return id;
+    private LocalDateTime createdAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_vendors",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "vendor_id")
+    )
+    private Set<Vendor> favoriteVendors = new HashSet<>();
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
     }
 
-    public String getEmail() {
-        return email;
-    }
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getRole() {
-        return role;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
-    public void setRole(String role) {
-        this.role = role;
+    public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public Set<Vendor> getFavoriteVendors() {
+        return favoriteVendors;
     }
 }
