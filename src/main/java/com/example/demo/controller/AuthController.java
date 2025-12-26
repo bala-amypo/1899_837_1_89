@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AuthRequest; // You need to ensure this DTO exists
+import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
 import com.example.demo.model.User;
 import com.example.demo.security.JwtUtil;
@@ -19,7 +19,11 @@ public class AuthController {
     private final UserService userService;
     private final JwtUtil jwtUtil;
 
-    public AuthController(AuthenticationManager authenticationManager, UserService userService, JwtUtil jwtUtil) {
+    public AuthController(
+            AuthenticationManager authenticationManager,
+            UserService userService,
+            JwtUtil jwtUtil
+    ) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtUtil = jwtUtil;
@@ -32,16 +36,21 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(
+                        authRequest.getEmail(),
+                        authRequest.getPassword()
+                )
         );
 
         User user = userService.findByEmail(authRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtUtil.generateToken(user.getEmail());
-        
-        // Return token, id, email, role
-        return ResponseEntity.ok(new AuthResponse(token, user.getId(), user.getEmail(), user.getRole()));
+
+        return ResponseEntity.ok(
+                new AuthResponse(token, user.getId(), user.getEmail(), user.getRole())
+        );
     }
 }
