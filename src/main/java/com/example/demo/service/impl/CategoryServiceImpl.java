@@ -32,4 +32,15 @@ public class CategoryServiceImpl implements CategoryService {
     public Optional<Category> getCategoryById(Long id) {
         return categoryRepository.findById(id);
     }
-}
+
+    // ... existing code ...
+
+    @Override
+    public void deleteRule(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new RuntimeException("Rule not found with id: " + id);
+        }
+    }
+} // End of class
