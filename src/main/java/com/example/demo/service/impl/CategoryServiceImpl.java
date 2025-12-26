@@ -33,14 +33,17 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(id);
     }
 
-    // ... existing code ...
-
+    // This method was causing the error because it used the wrong variable name
     @Override
-    public void deleteRule(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new RuntimeException("Rule not found with id: " + id);
-        }
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
     }
-} // End of class
+    
+    @Override
+    public Category updateCategory(Long id, Category categoryDetails) {
+        return categoryRepository.findById(id).map(existingCategory -> {
+            existingCategory.setName(categoryDetails.getName());
+            return categoryRepository.save(existingCategory);
+        }).orElse(null);
+    }
+}

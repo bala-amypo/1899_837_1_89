@@ -7,4 +7,12 @@ public interface CategorizationRuleService {
     CategorizationRule createRule(CategorizationRule rule);
     List<CategorizationRule> getAllRules();
     void deleteRule(Long id);
+    @Override
+    public void deleteRule(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new RuntimeException("Rule not found with id: " + id);
+        }
+    }
 }
