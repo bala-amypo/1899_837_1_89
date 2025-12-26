@@ -3,47 +3,59 @@ package com.example.demo.util;
 import com.example.demo.model.CategorizationRule;
 import com.example.demo.model.Category;
 import com.example.demo.model.Invoice;
-import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-@Component
 public class InvoiceCategorizationEngine {
 
-    public Category determineCategory(Invoice invoice, List<CategorizationRule> rules) {
-        if (invoice.getDescription() == null || rules == null || rules.isEmpty()) {
+    public Category determineCategory(Invoice invoice,
+                                      List<CategorizationRule> rules) {
+
+        if (rules == null || rules.isEmpty()) {
             return null;
         }
 
-        // Sort rules by priority (Descending)
-        // Test requirement: Higher priority evaluated first
+        String description = invoice.getDescription();
+        if (description == null) {
+            return null;
+        }
+
         return rules.stream()
-                .sorted(Comparator.comparingInt(CategorizationRule::getPriority).reversed())
-                .filter(rule -> matches(invoice.getDescription(), rule))
-                .findFirst()
+                // highest priority first
+                .sorted(Comparator.comparing(CategorizationRule::getPriority).reversed())
+                // find first matching rule
+                .filter(rule -> matches(rule, description))
+                // return category
                 .map(CategorizationRule::getCategory)
+                .findFirst()
                 .orElse(null);
     }
 
-    private boolean matches(String description, CategorizationRule rule) {
-        String input = description;
-        String keyword = rule.getKeyword();
+    private boolean matches(CategorizationRule rule, String description) {
 
-        switch (rule.getMatchType().toUpperCase()) {
-            case "EXACT":
-                return input.equalsIgnoreCase(keyword);
-            case "CONTAINS":
-                return input.toLowerCase().contains(keyword.toLowerCase());
-            case "REGEX":
-                try {
-                    return Pattern.compile(keyword, Pattern.CASE_INSENSITIVE).matcher(input).find();
-                } catch (Exception e) {
-                    return false;
-                }
-            default:
-                return false;
+        String keyword = rule.getKeyword();
+        String matchType = rule.getMatchType();
+
+        if (keyword == null || matchType == null) {
+            return false;
         }
+
+        return switch (matchType.toUpperCase()) {
+
+            case "EXACT" ->
+                    description.equalsIgnoreCase(keyword);
+
+            case "CONTAINS" ->
+                    description.toLowerCase().contains(keyword.toLowerCase());
+
+            case "REGEX" ->
+                    Pattern.compile(keyword, Pattern.CASE_INSENSITIVE)
+                           .matcher(description)
+                           .matches();
+
+            default -> false;
+        };
     }
 }
