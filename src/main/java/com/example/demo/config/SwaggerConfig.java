@@ -15,23 +15,23 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
-    @Bean("srsOpenAPI") // Unique name to avoid conflict with OpenApiConfig
-    @Primary            // Forces Spring to use THIS configuration over the other one
-    public OpenAPI srsOpenAPI() {
+    // 1. USE THE EXACT SAME NAME 'customOpenAPI' to overwrite the file you can't delete
+    @Bean
+    @Primary
+    public OpenAPI customOpenAPI() { 
         return new OpenAPI()
-                // 1. SRS Requirements (Title, Version)
+                // 2. SRS MANDATE: Title, Version, Description
                 .info(new Info()
                         .title("Smart Invoice Categorization API")
                         .version("1.0")
                         .description("API for managing and categorizing invoices."))
                 
-                // 2. IMPORTANT: Include the URL from OpenApiConfig here
-                // Since this bean is Primary, it must have the URL to work.
+                // 3. ENVIRONMENT MANDATE: Your Amypo URL
                 .servers(List.of(
                         new Server().url("https://9287.408procr.amypo.ai/")
                 ))
 
-                // 3. Security Requirements
+                // 4. SRS MANDATE: JWT Security
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth",
