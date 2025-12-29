@@ -18,7 +18,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 // 1. Keep your Custom Server URL
                 .servers(List.of(
-                        new Server().url("https://9287.408procr.amypo.ai/")
+                        new Server().url("https://9001.408procr.amypo.ai/")
                 ))
                 // 2. Add API Info (Required by Spec) 
                 .info(new Info()
