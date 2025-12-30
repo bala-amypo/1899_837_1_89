@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserServiceImpl userService;
-    private final UserRepository user
+    private final UserRepository userR
     epository; // Direct repo access for simple getters per spec
 
     public UserController(UserServiceImpl userService, UserRepository userRepository) {
