@@ -12,7 +12,6 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
     private final UserRepository userRepository;
-    epository; // Direct repo access for simple getters per spec
 
     public UserController(UserServiceImpl userService, UserRepository userRepository) {
         this.userService = userService;
